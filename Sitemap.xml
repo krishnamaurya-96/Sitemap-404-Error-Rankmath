@@ -1,0 +1,37 @@
+Issue:1- Rank Math Does Not Create a Sitemap & Throws a 404 Error.
+
+Solution:1- If Rank Math doesn’t create a sitemap file or if you are getting a 404 error while trying to access your sitemap index, you may have to flush permalinks. Don’t be scared, it is fairly easy to do.
+
+Simply head over to your WordPress admin area and go to Settings > Permalinks and hit the “Save Changes” button once even if you didn’t make any changes on the page. 
+
+Issue:2- Sitemap is not working on my Apache Web-Server.
+
+Solution: Rank Math creates a virtual Sitemap dynamically when you enable that module. We rely on redirects enabled by your server software to accomplish that. If the Sitemap doesn’t work, you may have to add some rewrite rules manually.
+
+To ensure you need to add these rewrite rules, go to domain.com?sitemap=1. If it loads your sitemap, that means you need to add the rewrite rules.
+
+Check your .htaccess and add the following code:
+
+# START of Rank Math Sitemap Rewrite Rules
+RewriteEngine On
+RewriteBase /
+RewriteRule ^sitemap_index.xml$ /index.php?sitemap=1 [L]
+RewriteRule ^([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 [L]
+RewriteRule ^([a-z]+)?-?sitemap.xsl$ /index.php?xsl=$1 [L]
+# END of Rank Math Sitemap Rewrite Rules
+
+Issue:3- Sitemap is not working on my Nginx Web-Server.
+
+Solution: Rank Math creates a virtual Sitemap dynamically when you enable that module. We rely on redirects enabled by your server software to accomplish that. If the Sitemap doesn’t work, you may have to add some rewrite rules manually.
+
+To ensure you need to add these rewrite rules, go to domain.com?sitemap=1. If it loads your sitemap, that means you need to add the rewrite rules.
+
+Check your Nginx config file and add the following code:
+
+# START Nginx Rewrites for Rank Math Sitemaps
+rewrite ^/sitemap_index.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;
+# END Nginx Rewrites for Rank Math Sitemaps
+
+
+NOTE:>>>> If above method not working then check your server firewall and disable it.
